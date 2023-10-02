@@ -33,7 +33,7 @@ export async function PATCH(
     const body = await req.json();
     const { label, imageUrl } = body;
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 401 });
     }
     if (!label) {
       return new NextResponse("Label is required", { status: 400 });
