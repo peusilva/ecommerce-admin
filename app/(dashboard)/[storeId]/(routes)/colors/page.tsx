@@ -1,35 +1,32 @@
 import { format } from "date-fns";
 import prismadb from "@/lib/prismadb";
-import { CategoryClient } from "./components/client";
-import { CategoryColumn } from "./components/columns";
+import { ColorClient } from "./components/client";
+import { ColorColumn } from "./components/columns";
 
-const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
-  const categories = await prismadb.category.findMany({
+const ColorsPage = async ({ params }: { params: { storeId: string } }) => {
+  const colors = await prismadb.color.findMany({
     where: {
       storeId: params.storeId,
-    },
-    include: {
-      billboard: true,
     },
     orderBy: {
       createdAt: "desc",
     },
   });
 
-  const formattedCategories: CategoryColumn[] = categories.map((category) => ({
-    id: category.id,
-    name: category.name,
-    billboardLabel: category.billboard.label,
-    createdAt: format(category.createdAt, "MMMM, dd, yyyy"),
-    storeId: category.storeId,
+  const formattedColors: ColorColumn[] = colors.map((color) => ({
+    id: color.id,
+    name: color.name,
+    value: color.value,
+    createdAt: format(color.createdAt, "MMMM, dd, yyyy"),
+    storeId: color.storeId,
   }));
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <CategoryClient data={formattedCategories} />
+        <ColorClient data={formattedColors} />
       </div>
     </div>
   );
 };
 
-export default CategoriesPage;
+export default ColorsPage;

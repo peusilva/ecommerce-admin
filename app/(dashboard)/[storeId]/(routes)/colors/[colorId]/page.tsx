@@ -1,30 +1,24 @@
 import prismadb from "@/lib/prismadb";
-import { CategoryForm } from "./components/CategoryForm";
+import { ColorForm } from "./components/ColorForm";
 
-const CategoryPage = async ({
+const ColorPage = async ({
   params,
 }: {
-  params: { categoryId: string; storeId: string };
+  params: { colorId: string; storeId: string };
 }) => {
-  const category = await prismadb.category.findUnique({
+  const color = await prismadb.color.findUnique({
     where: {
-      id: params.categoryId,
-    },
-  });
-
-  const billboards = await prismadb.billboard.findMany({
-    where: {
-      storeId: params.storeId,
+      id: params.colorId,
     },
   });
 
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <CategoryForm initialData={category} billboards={billboards} />
+        <ColorForm initialData={color} />
       </div>
     </div>
   );
 };
 
-export default CategoryPage;
+export default ColorPage;

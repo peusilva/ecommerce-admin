@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertModal } from "@/components/modals/alert-modal";
-import { ColorColumn } from "./columns";
+import { ProductColumn } from "./columns";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,7 +19,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 interface CellActionProps {
-  data: ColorColumn;
+  data: ProductColumn;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -31,12 +31,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/${params.storeId}/colors/${data.id}`);
+      await axios.delete(`/api/${params.storeId}/products/${data.id}`);
       router.refresh();
-      router.push(`/${params.storeId}/colors`);
-      toast.success(`Color deleted`);
+      router.push(`/${params.storeId}/products`);
+      toast.success(`Product deleted`);
     } catch (error) {
-      toast.error("Make sure to remove all products of this color first.");
+      toast.error("Error deleting product.");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -80,7 +80,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             className="hover:cursor-pointer"
-            onClick={() => router.push(`/${params.storeId}/colors/${data.id}`)}
+            onClick={() =>
+              router.push(`/${params.storeId}/products/${data.id}`)
+            }
           >
             <Edit className="mr-2 h-4 w-4" />
             Edit
