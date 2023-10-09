@@ -15,6 +15,12 @@ export async function GET(
       where: {
         id: params.productId,
       },
+      include: {
+        images: true,
+        category: true,
+        color: true,
+        size: true,
+      },
     });
 
     return NextResponse.json(product);
